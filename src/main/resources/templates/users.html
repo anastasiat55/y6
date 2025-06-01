@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Користувачі</title>
 </head>
 <body>
-$END$
+<h1>Список користувачів</h1>
+
+<ul>
+    <li th:each="user : ${users}">
+        <span th:text="${user.name}">Ім'я</span> -
+        <span th:text="${user.email}">email@example.com</span>
+        <form th:action="@{/delete}" method="post" style="display:inline">
+            <input type="hidden" name="id" th:value="${user.id}" />
+            <button type="submit">Видалити</button>
+        </form>
+    </li>
+</ul>
+
+<h2>Додати нового користувача</h2>
+<form th:action="@{/add}" th:object="${newUser}" method="post">
+    <input type="text" th:field="*{name}" placeholder="Ім’я" required /><br/>
+    <input type="email" th:field="*{email}" placeholder="Email" required /><br/>
+    <button type="submit">Додати</button>
+</form>
 </body>
 </html>
