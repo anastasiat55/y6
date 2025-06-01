@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Бронювання</title>
 </head>
 <body>
-$END$
+<h1>Список бронювань</h1>
+
+<ul>
+  <li th:each="booking : ${bookings}">
+    <span th:text="'User ID: ' + booking.userId + ', Дата: ' + booking.date + ', Деталі: ' + booking.details"></span>
+    <form th:action="@{/bookings/delete}" method="post" style="display:inline">
+      <input type="hidden" name="id" th:value="${booking.id}" />
+      <button type="submit">Видалити</button>
+    </form>
+  </li>
+</ul>
+
+<h2>Додати бронювання</h2>
+<form th:action="@{/bookings/add}" th:object="${newBooking}" method="post">
+  <input type="number" th:field="*{userId}" placeholder="User ID" required />
+  <input type="date" th:field="*{date}" required />
+  <input type="text" th:field="*{details}" placeholder="Деталі" required />
+  <button type="submit">Додати</button>
+</form>
 </body>
 </html>
